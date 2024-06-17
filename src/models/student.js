@@ -16,7 +16,6 @@ const studentSchema = new mongoose.Schema({
     },
     lName: {
         type: String,
-        required: true,
     },
     year: {
         type: Number,
@@ -37,6 +36,15 @@ const studentSchema = new mongoose.Schema({
         unique:true,
     },
     courses: [{
-        
-    }]
+        type:Number
+    }],
+    fatherName:{
+        type:String,
+    },
+    motherName:{
+        type:String,
+    },
+    parentsContact:{
+        type:Number,
+    }
 })

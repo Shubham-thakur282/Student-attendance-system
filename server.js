@@ -4,12 +4,15 @@ const http = require("http");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const connectDb = require("./src/database/connect"); //require connectDb function from the src -> database -> connect.js
+const courseRoutes = require("./src/routes/courseRoutes");
 
 const port = process.env.PORT || 5000;
 const app = express();
 
 app.use(express.json()); // middlewares
 app.use(cors());
+
+app.use("/api/course",courseRoutes) //all the course routes are going to be here
 
 // register and login routes
 app.get("/",(req,res)=>{
@@ -18,7 +21,7 @@ app.get("/",(req,res)=>{
 
 const start = async ()=>{
     try {
-        await connectDb(process.env.MONGO_URI_2);
+        await connectDb(process.env.MONGO_URI);
         app.listen(port, (req, res) => {
             console.log(`Server running on port ${port}`);
         }); 

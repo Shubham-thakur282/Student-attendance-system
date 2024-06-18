@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema({
     enrollNo: {
-        type: String,
+        type: Number,
         required: true,
         unique: true,
     },
@@ -26,7 +26,7 @@ const studentSchema = new mongoose.Schema({
         enum: ['A', 'B'],
         required: true,
     },
-    dateOfBirth:{
+    dob:{
         type:Date,
         required:true,
     },
@@ -46,5 +46,11 @@ const studentSchema = new mongoose.Schema({
     },
     parentsContact:{
         type:Number,
+    },
+    password:{
+        type:String,
+        required:true,
     }
 })
+
+module.exports = mongoose.model("Students",studentSchema);

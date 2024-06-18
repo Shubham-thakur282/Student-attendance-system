@@ -59,7 +59,7 @@ const showCourses = async (req,res)=>{
         if(courses){
             res.status(200).send(courses);
         }else{
-            return res.status(400).send("Eroor occured. Please try again");
+            return res.status(400).send("Courses not found!");
         }
     } catch (error) {
         console.log(error.message);

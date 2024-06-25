@@ -1,70 +1,70 @@
 const Course = require("../../models/course");
 
-const addCourse = async (req,res)=>{
+const addCourse = async (req, res) => {
     //this function is for adding a new course
     try {
-        const {courseId , courseName} = req.body;
-        const courseExist = await Course.exists({courseId:courseId});
-        if(courseExist){
-            return res.status(409).send("Course already existing");
+        const { courseId, courseName } = req.body;
+        const courseExist = await Course.exists({ courseId: courseId });
+        if (courseExist) {
+            return res.status(409).send("Course already exists");
         }
         const course = await Course.create({
             courseId,
             courseName
         });
-        res.status(201).send(course);
+        return res.status(201).send(course);
     } catch (error) {
-        console.log(error.message);
-        return res.status(500).send("Error occured please try again");
+        console.error(error.message);
+        return res.status(500).send("Error occurred, please try again");
     }
 };
 
-const removeCourse = async(req,res)=>{
+const removeCourse = async (req, res) => {
     // remove course from the database
     try {
-        const {courseId} = req.body;
-        const course = await Course.findOne({courseId:courseId});
-        if(course){
-            await Course.deleteOne({courseId:courseId});
-            res.status(200).send("Course deleted successfully");
-        }else{
-            return res.status(400).send("Course does not exit. Please try again");
+        const { courseId } = req.body;
+        const course = await Course.findOne({ courseId: courseId });
+        if (!course) {
+            console.log("dont exist");
+            return res.status(400).send("Course does not exist. Please try again");
         }
+        console.log("Exist");
+        await Course.deleteOne({ courseId: courseId });
+        return res.status(200).send("Course deleted successfully");  
     } catch (error) {
-        console.log(error.message);
-        return res.status(500).send("Error occured please try again");
+        console.log("error");
+        console.error(error);
+        res.status(500).send("Error occurred, please try again");
     }
 };
 
-const updateCourse = async(req,res)=>{
+const updateCourse = async (req, res) => {
     //update the course name
-    try{
-        const {courseId,courseName} = req.body;
-        const course = await Course.findOne({courseId:courseId});
-        if(course){
-            await Course.findOneAndUpdate({courseId:courseId},{courseName:courseName});
-            res.status(200).send("Course name changed successfully");   
-        }else{
-            return res.status(400).send("Course does not exist/ Please try again");
+    try {
+        const { courseId, courseName } = req.body;
+        const course = await Course.findOne({ courseId: courseId });
+        if (!course) {
+            return res.status(400).send("Course does not exist. Please try again");
         }
-    }catch(error){
-        console.log(error.message);
-        return res.status(500).send("Error occured. Please try again");
+        await Course.findOneAndUpdate({ courseId: courseId }, { courseName: courseName });
+        return res.status(200).send("Course name changed successfully");
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).send("Error occurred, please try again");
     }
 }
 
-const showCourses = async (req,res)=>{
+const showCourses = async (req, res) => {
     try {
         const courses = await Course.find();
-        if(courses){
-            res.status(200).send(courses);
-        }else{
-            return res.status(400).send("Courses not found!");
+        if (!courses || courses.length === 0) {
+            return res.status(404).send("Courses not found");
         }
+        return res.status(200).send(courses);
     } catch (error) {
-        console.log(error.message);
-        res.status(500).send("Error occured Please try again");
+        console.error(error.message);
+        return res.status(500).send("Error occurred, please try again");
     }
 }
 
-module.exports = {addCourse,removeCourse,updateCourse,showCourses};
+module.exports = { addCourse, removeCourse, updateCourse, showCourses };

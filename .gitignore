@@ -1,7 +1,7 @@
 #data file
 courses.json
 students.json
-
+faculty.json
 # Logs
 logs
 *.log

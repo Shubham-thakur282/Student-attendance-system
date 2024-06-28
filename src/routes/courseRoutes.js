@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const {addCourse,removeCourse, updateCourse,showCourses} = require("../controller/course/coursePost");
+const {addCourse,removeCourse, updateCourse} = require("../controller/course/coursePost");
+const {showCourses} = require("../controller/course/courseGet");
 const {auth,roleAuth} = require("../middleware/auth");
 
 const joi = require("joi");

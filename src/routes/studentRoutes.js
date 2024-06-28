@@ -1,22 +1,25 @@
 const express = require("express");
 const router = express.Router();
 
-const {auth, roleAuth} = require("../middleware/auth");
+const { auth, roleAuth } = require("../middleware/auth");
 
-const {addStudent,showAll,studentLogin} = require("../controller/student/studentPost");
+const { addStudent, studentLogin } = require("../controller/student/studentPost");
+const { showAll } = require("../controller/student/studentGet");
 
 //students login route
-router.post("/student-login",studentLogin);
-
+router.post("/student-login", studentLogin);
 
 //routes related to student
-router.post("/new-student",auth,roleAuth("Admin"),addStudent);
-router.get("/all",auth,showAll);
+//post routes
+router.post("/new-student", auth, roleAuth("Admin"), addStudent);
 
-router.get("/test",auth,roleAuth("Student"),(req,res)=> {
+
+//get routes
+router.get("/all-students", auth, showAll);
+
+router.get("/test", auth, roleAuth("Student"), (req, res) => {
     res.send("Hello Student");
 });
-
 
 
 module.exports = router;

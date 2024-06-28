@@ -42,6 +42,7 @@ const addStudent = async (req, res) => {
         })
 
     } catch (error) {
+        console.log(error.message);
         return res.status(500).send("Error occured. Please try again");
     }
 };
@@ -50,7 +51,7 @@ const addStudent = async (req, res) => {
 const studentLogin = async (req, res) => {
     try {
         const { enrollNo, password, role } = req.body;
-
+        
         const student = await Students.findOne({ enrollNo: enrollNo });
 
         if (student && (await bcrypt.compare(password, student.password))) {

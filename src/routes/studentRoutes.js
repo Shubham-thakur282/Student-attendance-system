@@ -17,7 +17,7 @@ router.post("/new-student", auth, roleAuth("Admin"), addStudent);
 //get routes
 router.get("/all-students", auth, showAll);
 
-router.get("/test", auth, roleAuth("Student"), (req, res) => {
+router.get("/test", (req, res) => {
     res.send("Hello Student");
 });
 

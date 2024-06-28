@@ -73,7 +73,7 @@ const facultyLogin = async (req, res) => {
             )
 
             return res.status(201).send({
-                studentDetails: {
+                facultyDetails: {
                     Name: faculty.name,
                     token,
                     email: faculty.email,

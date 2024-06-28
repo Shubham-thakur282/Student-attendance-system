@@ -5,14 +5,15 @@ const addCourse = async (req, res) => {
     try {
         const { courseId, courseName } = req.body;
         const courseExist = await Course.exists({ courseId: courseId });
-        if (courseExist) {
-            return res.status(409).send("Course already exists");
+        if (!courseExist) {
+            const course = await Course.create({
+                courseId,
+                courseName
+            });
+            return res.status(201).send(course);
         }
-        const course = await Course.create({
-            courseId,
-            courseName
-        });
-        return res.status(201).send(course);
+
+        return res.status(409).send("Course already exists");
     } catch (error) {
         console.error(error.message);
         return res.status(500).send("Error occurred, please try again");
@@ -25,15 +26,12 @@ const removeCourse = async (req, res) => {
         const { courseId } = req.body;
         const course = await Course.findOne({ courseId: courseId });
         if (!course) {
-            console.log("dont exist");
             return res.status(400).send("Course does not exist. Please try again");
         }
-        console.log("Exist");
         await Course.deleteOne({ courseId: courseId });
-        return res.status(200).send("Course deleted successfully");  
+        return res.status(200).send("Course deleted successfully");
     } catch (error) {
-        console.log("error");
-        console.error(error);
+        console.error(error.message);
         res.status(500).send("Error occurred, please try again");
     }
 };

@@ -10,8 +10,8 @@ router.post("/student-login",studentLogin);
 
 
 //routes related to student
-router.post("/new-student",addStudent);
-router.get("/all",showAll);
+router.post("/new-student",auth,roleAuth("Admin"),addStudent);
+router.get("/all",auth,showAll);
 
 router.get("/test",auth,roleAuth("Student"),(req,res)=> {
     res.send("Hello Student");

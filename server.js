@@ -11,6 +11,7 @@ const courseRoutes = require("./src/routes/courseRoutes");
 const studentRoutes = require("./src/routes/studentRoutes");
 const attendanceRoutes = require("./src/routes/attendanceRoutes");
 const facultyRoutes = require("./src/routes/facultyRoutes");
+const parentRoutes = require("./src/routes/parentRoutes");
 
 
 const port = process.env.PORT || 5000;
@@ -23,6 +24,7 @@ app.use("/api/course", courseRoutes); //all the course routes are going to be he
 app.use("/api/student", studentRoutes); //all the student routes are going to be here
 app.use("/api/attendance",attendanceRoutes); //all the student routes are going to be here
 app.use("/api/faculty",facultyRoutes); //all the faculty routes are going to be here
+app.use("/api/parents",parentRoutes); //all the parent routes are going to be here
 
 // register and login routes
 app.get("/",auth, (req, res) => {

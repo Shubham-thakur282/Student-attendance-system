@@ -11,8 +11,7 @@ const auth = (req, res, next)=>{
         token = token.replace(/^Bearer\s+/,"");
         const decoded = jwt.verify(token,config.TOKEN_KEY);
         req.user = decoded;
-        // req.user.role = decoded.role;
-        next();
+        
     } catch (error) {
         return res.status(401).send("Invalid token");
     }

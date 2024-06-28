@@ -1,30 +1,35 @@
 const mongoose = require("mongoose");
 
 const facultySchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
+    name: {
+        type: String,
+        required: true,
     },
-    email:{
-        type:String,
-        required:true,
-        unique:true,
+    email: {
+        type: String,
+        required: true,
+        unique: true,
     },
-    password:{
-        type:String,
-        required:true,
+    password: {
+        type: String,
+        required: true,
     },
-    coursesTeaching:[{
-        type:Number,
+    role: {
+        type: String,
+        enum: ["Faculty", "Admin"],
+        required: true,
+    },
+    coursesTeaching: [{
+        type: Number,
     }],
-    classesTeaching:[{
-        year:{
-            type:Number,
+    classesTeaching: [{
+        year: {
+            type: Number,
         },
-        sections:[{
-            type:String,
+        sections: [{
+            type: String,
         }]
     }]
 });
 
-module.exports = mongoose.model("faculties",facultySchema);
+module.exports = mongoose.model("faculties", facultySchema);

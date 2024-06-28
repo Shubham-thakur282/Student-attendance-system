@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const addFaculty = async (req, res) => {
     try {
-        const { name, email, password, coursesTeaching, classesTeaching } = req.body;
+        const { name, email, password, role, coursesTeaching, classesTeaching } = req.body;
 
         const facultyExist = await Faculty.exists({ email });
         if (facultyExist) {
@@ -17,6 +17,7 @@ const addFaculty = async (req, res) => {
             name,
             email,
             password: newPass,
+            role,
             coursesTeaching,
             classesTeaching,
         });
@@ -25,13 +26,69 @@ const addFaculty = async (req, res) => {
             facultyDetails: {
                 name: faculty.name,
                 email: faculty.name,
+                role: faculty.role,
+                message: `${faculty.name} is added`,
             }
 
-        })
+        });
 
     } catch (error) {
+        console.log(error.message);
         return res.status(500).send("Error occured. Please try again");
     }
 }
 
-module.exports = {addFaculty};
+const removeFaculty = async (req, res) => {
+    try {
+        const { name, email } = req.body;
+        const facultyExist = await Faculty.exists({ email, name });
+
+        if (facultyExist) {
+            await Faculty.deleteOne({ email });
+            return res.status(200).send(`${name} removed successfully`);
+        }
+
+        return res.status(400).send("Faculty does not exist. Please try again");
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).send("Error occured . Please try again!");
+    }
+}
+
+const facultyLogin = async (req, res) => {
+    try {
+        const { email, password, role } = req.body;
+
+        const faculty = await Faculty.findOne({ email: email });
+
+        if (faculty && (await bcrypt.compare(password, faculty.password))) {
+            const token = jwt.sign({
+                facultyId: faculty._id,
+                email,
+                role,
+            },
+                process.env.TOKEN_KEY, {
+                expiresIn: "24h"
+            }
+            )
+
+            return res.status(201).send({
+                studentDetails: {
+                    Name: faculty.name,
+                    token,
+                    email: faculty.email,
+                    role,
+                }
+            });
+        }
+
+        return res.status(400).send("Invalid Credentials. Please try again");
+
+    } catch (error) {
+
+        return res.status(500).send("Something went wrong. Please try again");
+    }
+
+}
+
+module.exports = { addFaculty, removeFaculty, facultyLogin };

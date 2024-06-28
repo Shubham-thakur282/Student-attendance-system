@@ -13,7 +13,7 @@ const courseSchema = joi.object({
 
 router.get("/show-courses",auth,showCourses);
 router.post("/add",validator.body(courseSchema),auth,addCourse);
-router.post("/remove",auth,roleAuth("Student"),removeCourse);
+router.post("/remove",auth,roleAuth("Admin"),removeCourse);
 router.post("/update",auth,updateCourse);
 
 module.exports = router;

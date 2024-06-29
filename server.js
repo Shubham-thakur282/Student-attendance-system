@@ -1,9 +1,7 @@
 require("dotenv").config();
 const express = require("express");
-const https = require("https");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const fs = require("fs");
 const connectDb = require("./src/database/connect"); //require connectDb function from the src -> database -> connect.js
 
 const { auth } = require("./src/middleware/auth");
@@ -33,18 +31,12 @@ app.get("/", (req, res) => {
     res.send("Welcome to my API");
 });
 
-const sslOptions = {
-    key: fs.readFileSync("./myCA.key"),
-    cert: fs.readFileSync("./myCA.pem")
-}
-
-const server = https.createServer(sslOptions, app);
 
 const start = async () => {
     try {
 
         await connectDb(process.env.MONGO_URI);
-        server.listen(port, (req, res) => {
+        app.listen(port, (req, res) => {
             console.log(`Server running on port ${port}`);
         });
 

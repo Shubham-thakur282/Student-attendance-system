@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const {addCourse,removeCourse, updateCourse} = require("../controller/course/coursePost");
+const {addCourse, updateCourse} = require("../controller/course/coursePost");
 const {showCourses} = require("../controller/course/courseGet");
+const {removeCourse} = require("../controller/course/courseDelete");
 const {auth,roleAuth} = require("../middleware/auth");
 
 const joi = require("joi");
@@ -14,7 +15,7 @@ const courseSchema = joi.object({
 
 router.get("/show-courses",auth,showCourses);
 router.post("/add",validator.body(courseSchema),auth,addCourse);
-router.post("/remove",auth,roleAuth("Admin"),removeCourse);
-router.post("/update",auth,updateCourse);
+router.delete("/remove",auth,roleAuth("Admin"),removeCourse);
+router.put("/update",auth,updateCourse);
 
 module.exports = router;

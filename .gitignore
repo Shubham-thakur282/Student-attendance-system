@@ -3,8 +3,7 @@ courses.json
 students.json
 faculty.json
 insertCourses.js
-myCA.key
-myCa.pem
+
 # Logs
 logs
 *.log

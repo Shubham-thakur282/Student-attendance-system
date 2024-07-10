@@ -25,7 +25,7 @@ const addFaculty = async (req, res) => {
         res.status(201).json({
             facultyDetails: {
                 name: faculty.name,
-                email: faculty.name,
+                email: faculty.email,
                 role: faculty.role,
                 message: `${faculty.name} is added`,
             }
@@ -38,22 +38,6 @@ const addFaculty = async (req, res) => {
     }
 }
 
-const removeFaculty = async (req, res) => {
-    try {
-        const { name, email } = req.body;
-        const facultyExist = await Faculty.exists({ email, name });
-
-        if (facultyExist) {
-            await Faculty.deleteOne({ email });
-            return res.status(200).send(`${name} removed successfully`);
-        }
-
-        return res.status(400).send("Faculty does not exist. Please try again");
-    } catch (error) {
-        console.log(error.message);
-        return res.status(500).send("Error occured . Please try again!");
-    }
-}
 
 const facultyLogin = async (req, res) => {
     try {
@@ -91,4 +75,4 @@ const facultyLogin = async (req, res) => {
 
 }
 
-module.exports = { addFaculty, removeFaculty, facultyLogin };
+module.exports = { addFaculty, facultyLogin };

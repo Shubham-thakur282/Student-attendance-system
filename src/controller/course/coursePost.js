@@ -3,13 +3,14 @@ const Course = require("../../models/course");
 const addCourse = async (req, res) => {
     try {
         
-        const { courseId, courseName } = req.body;
+        const { courseId, courseName ,year} = req.body;
         const courseExist = await Course.exists({ courseId: courseId });
 
         if (!courseExist) {
             const course = await Course.create({
                 courseId,
-                courseName
+                courseName,
+                year
             });
             return res.status(201).send(course);
         }

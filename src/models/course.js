@@ -5,6 +5,11 @@ const courseSchema = new mongoose.Schema({
         type:Number,
         required:true,
     },
+    year:{
+        type:Number,
+        required:true,
+        enum:[1,2],
+    },
     courseName:{
         type:String,
         required:true,

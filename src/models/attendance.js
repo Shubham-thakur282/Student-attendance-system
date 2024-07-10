@@ -1,3 +1,4 @@
+const { required } = require("joi");
 const mongoose = require("mongoose");
 
 const attendanceSchema = new mongoose.Schema({
@@ -14,10 +15,22 @@ const attendanceSchema = new mongoose.Schema({
         required:true,
         enum:["A","P","L"]
     },
+    year:{
+        type:Number,
+        required:true,
+    },
+    section:{
+        type:String,
+        required:true,
+        enum:["A","B"],
+    },
     date:{
-        type:Date,
-        require:true,
-        default:Date.now
+        type:String,
+        required:true,
+    },
+    time:{
+        type:String,
+        required:true,
     }
 });
 

@@ -2,7 +2,7 @@
 courses.json
 students.json
 faculty.json
-insertCourses.js
+insertCourse.js
 
 # Logs
 logs

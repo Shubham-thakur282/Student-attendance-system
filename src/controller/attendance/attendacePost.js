@@ -5,42 +5,54 @@ const Course = require("../../models/course");
 const newAttendace = async (req, res) => {
     try {
 
-        const attendanceRecords = req.body.attendanceRecords;
+        const { attendanceRecords, date, time, year, section } = req.body;
 
         if (!Array.isArray(attendanceRecords) || attendanceRecords.length === 0) {
             return res.status(400).send("Invalid input, expected an array of attendance record");
         }
 
-        console.log(attendanceRecords);
         const validAttendanceRecords = [];
 
+        const attendaceTaken = await Attendance.exists({ date, time, year, section });
 
-        for (const record of attendanceRecords) {
-            const { enrollNo, courseId, status } = record;
+        if (!attendaceTaken) {
+            for (const record of attendanceRecords) {
 
-            const studentExist = await Students.find({ enrollNo });
-            if (!studentExist) {
-                return res.status(404).send(`Student with enrollNo ${enrollNo} not found`);
+                const { enrollNo, courseId, status } = record;
+
+                const studentExist = await Students.findOne({ enrollNo });
+                
+                if (!studentExist) {
+                    return res.status(404).send(`Student with enrollNo ${enrollNo} not found`);
+                }
+
+
+                if (studentExist.section !== section || studentExist.year !== year) {
+                    return res.status(400).send("Section and year don't match with student's section and year")
+                }
+
+                const courseExist = await Course.find({ courseId });
+
+                if (!courseExist) {
+                    return res.status(404).send(`Course with CourseId ${courseId} not found`);
+                }
+
+                if (!["A", "P", "L"].includes(status)) {
+                    return res.status(400).send("Invalid Status");
+                }
+
+                validAttendanceRecords.push({ enrollNo, courseId, status, date, time, year, section });
             }
 
-            const courseExist = await Course.find({ courseId });
+            const createdRecords = await Attendance.insertMany(validAttendanceRecords);
+            return res.status(201).json(createdRecords);
 
-            if (!courseExist) {
-                return res.status(404).send(`Course with CourseId ${courseId} not found`);
-            }
-
-            if (!["A", "P", "L"].includes(status)) {
-                return res.status(400).send("Invalid Status");
-            }
-
-            validAttendanceRecords.push({ enrollNo, courseId, status });
         }
 
-        const createdRecords = await Attendance.insertMany(validAttendanceRecords);
-        res.status(201).json(createdRecords);
+        res.status(409).send("Record already exist");
 
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
         return res.status(500).send("Error Occured. Please try again");
     }
 }

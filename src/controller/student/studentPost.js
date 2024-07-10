@@ -51,7 +51,7 @@ const addStudent = async (req, res) => {
 const studentLogin = async (req, res) => {
     try {
         const { enrollNo, password, role } = req.body;
-        
+
         const student = await Students.findOne({ enrollNo: enrollNo });
 
         if (student && (await bcrypt.compare(password, student.password))) {
@@ -65,11 +65,21 @@ const studentLogin = async (req, res) => {
             }
             )
 
-            return res.status(201).send({
+            return res.status(200).send({
                 studentDetails: {
+                    id: student._id,
                     enrollNo: student.enrollNo,
                     token,
-                    Name: student.fName,
+                    rollNo: student.rollNo,
+                    fName: student.fName,
+                    lName: student.lName,
+                    year: student.year,
+                    section: student.section,
+                    dob: student.dob,
+                    email: student.email,
+                    courses: student.courses,
+                    fatherName: student.fatherName,
+                    motherName: student.motherName,
                     role,
                 }
             });
@@ -79,7 +89,9 @@ const studentLogin = async (req, res) => {
 
     } catch (error) {
 
+        console.log(error.message);
         return res.status(500).send("Something went wrong. Please try again");
+    
     }
 }
 

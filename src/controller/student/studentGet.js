@@ -30,12 +30,44 @@ const showAll = async (req, res) => {
 }
 
 
-const showStudents = (req, res) => {
+const showStudents = async (req, res) => {
     try {
+        const { year, section, enrollNo, rollNo } = req.query;
+
+        const queryObject = {};
+
+        if (year) {
+            queryObject.year = year;
+        }
+
+        if (section) {
+            queryObject.section = section;
+        }
+
+        if (enrollNo) {
+            queryObject.enrollNo = enrollNo;
+        }
+
+        if (rollNo) {
+            queryObject.rollNo = rollNo;
+        }
+
+        const response = await Students.find(queryObject, "-password");
+
+        if (!response) {
+            return res.status(404).send("Students Not Found");
+        }
+
+        res.status(200).send({
+            studentsDetails: response
+        })
 
     } catch (error) {
+
+        console.log(error.message);
+        return res.status(500).send("Error occured. Please try Again");
 
     }
 }
 
-module.exports = { showAll };
+module.exports = { showAll ,showStudents};

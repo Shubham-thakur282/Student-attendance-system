@@ -67,6 +67,10 @@ const parentLogin = async (req, res) => {
     try {
         const { studentId, password, role } = req.body;
 
+        if(role !== "Parent"){
+            return res.status(400).send("Invalid role");
+        }
+
         const parent = await Parents.findOne({ studentId });
 
         if (parent && (await bcrypt.compare(password, parent.password))) {

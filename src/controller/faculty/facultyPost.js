@@ -43,6 +43,10 @@ const facultyLogin = async (req, res) => {
     try {
         const { email, password, role } = req.body;
 
+        if(role !== "Faculty"){
+            return res.status(400).send("Invalid role");
+        }
+
         const faculty = await Faculty.findOne({ email: email });
 
         if (faculty && (await bcrypt.compare(password, faculty.password))) {

@@ -52,6 +52,10 @@ const studentLogin = async (req, res) => {
     try {
         const { enrollNo, password, role } = req.body;
 
+        if(role !== "Student"){
+            return res.status(400).send("Invalid role");
+        }
+
         const student = await Students.findOne({ enrollNo: enrollNo });
 
         if (student && (await bcrypt.compare(password, student.password))) {

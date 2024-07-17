@@ -7,7 +7,7 @@ const facultySchema = new mongoose.Schema({
     motherName:{
         type:String,
     },
-    studentId:{
+    enrollNo:{
         type:Number,
         required:true,
         unique:true,

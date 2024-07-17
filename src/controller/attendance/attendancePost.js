@@ -5,7 +5,7 @@ const Course = require("../../models/course");
 const newAttendace = async (req, res) => {
     try {
 
-        const { attendanceRecords, date, time, year, section } = req.body;
+        const { attendanceRecords,courseId, date, time, year, section } = req.body;
 
         if (!Array.isArray(attendanceRecords) || attendanceRecords.length === 0) {
             return res.status(400).send("Invalid input, expected an array of attendance record");
@@ -13,12 +13,12 @@ const newAttendace = async (req, res) => {
 
         const validAttendanceRecords = [];
 
-        const attendaceTaken = await Attendance.exists({ date, time, year, section });
+        const attendaceTaken = await Attendance.exists({ date, time, year, section, courseId });
 
         if (!attendaceTaken) {
             for (const record of attendanceRecords) {
 
-                const { enrollNo, courseId, status } = record;
+                const { enrollNo, status } = record;
 
                 const studentExist = await Students.findOne({ enrollNo });
                 

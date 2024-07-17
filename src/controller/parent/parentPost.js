@@ -8,10 +8,10 @@ const addParent = async (req, res) => {
         const { fatherName, motherName, studentId, password, contactNumber, role } = req.body;
 
         const parentExist = await Parents.exists({ studentId });
-        const studentExist = await Student.exists({enrollNo:studentId});
+        const studentExist = await Student.exists({ enrollNo: studentId });
 
-        if(!studentExist){
-            return res.status(400).json({message: "Student does not exist."});;
+        if (!studentExist) {
+            return res.status(400).json({ message: "Student does not exist." });;
         }
 
         if (parentExist) {
@@ -67,7 +67,7 @@ const parentLogin = async (req, res) => {
     try {
         const { studentId, password, role } = req.body;
 
-        if(role !== "Parent"){
+        if (role !== "Parent") {
             return res.status(400).send("Invalid role");
         }
 
@@ -105,4 +105,4 @@ const parentLogin = async (req, res) => {
 
 }
 
-module.exports = {addParent,removeParent,parentLogin};
+module.exports = { addParent, removeParent, parentLogin };

@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 const addStudent = async (req, res) => {
     try {
-        const { enrollNo, rollNo, fName, lName, year, section, dob, email, courses, fatherName, motherName, parentsContact, password, role } = req.body;
+        const { enrollNo, rollNo, fName, lName, year, section, dob, email, courses, fatherName, motherName, parentsContact, password, role,gender } = req.body;
 
         const studentExist = await Students.exists({ enrollNo: enrollNo });
         if (studentExist) {
@@ -19,6 +19,7 @@ const addStudent = async (req, res) => {
             rollNo,
             fName,
             lName,
+            gender,
             year,
             section,
             dob,
@@ -52,10 +53,6 @@ const studentLogin = async (req, res) => {
     try {
         const { enrollNo, password, role } = req.body;
 
-        if(role !== "Student"){
-            return res.status(400).send("Invalid role");
-        }
-
         const student = await Students.findOne({ enrollNo: enrollNo });
 
         if (student && (await bcrypt.compare(password, student.password))) {
@@ -77,6 +74,7 @@ const studentLogin = async (req, res) => {
                     rollNo: student.rollNo,
                     fName: student.fName,
                     lName: student.lName,
+                    gender: student.gender,
                     year: student.year,
                     section: student.section,
                     dob: student.dob,

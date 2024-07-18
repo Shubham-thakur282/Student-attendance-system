@@ -3,6 +3,7 @@ courses.json
 students.json
 faculty.json
 insertCourse.js
+parents.json
 
 # Logs
 logs

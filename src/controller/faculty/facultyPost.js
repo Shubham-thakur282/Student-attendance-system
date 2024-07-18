@@ -60,7 +60,7 @@ const facultyLogin = async (req, res) => {
             }
             )
 
-            return res.status(201).send({
+            return res.status(200).send({
                 facultyDetails: {
                     Name: faculty.name,
                     token,

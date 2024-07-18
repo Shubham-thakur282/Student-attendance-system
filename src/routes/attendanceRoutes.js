@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
+
 const newAttendance = require("../controller/attendance/attendancePost");
 const { getAttendanceByStudent, getAttendanceByFaculty } = require("../controller/attendance/attendanceGet");
 const { updateAttendance } = require("../controller/attendance/attendancePatch");
-const { deleteRecord } = require("../controller/attendance/attendanceDelete");
+const { deleteRecord, deleteAll } = require("../controller/attendance/attendanceDelete");
+
 const { auth, roleAuth } = require("../middleware/auth");
+
 
 router.post("/record-new", auth, newAttendance);
 
@@ -15,5 +18,6 @@ router.get("/show-attendance-faculty/:courseId/:year/:section", auth, roleAuth("
 router.patch("/update-attendance", auth, roleAuth("Faculty"), updateAttendance);
 
 router.delete("/remove-record", auth, roleAuth("Faculty"), deleteRecord);
+router.delete("/remove-all-records", auth, roleAuth("Admin"), deleteAll);
 
 module.exports = router;

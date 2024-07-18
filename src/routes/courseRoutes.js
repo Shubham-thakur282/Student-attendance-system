@@ -7,9 +7,9 @@ const { updateCourse } = require("../controller/course/CoursePatch");
 const { auth, roleAuth } = require("../middleware/auth");
 
 
-router.get("/show-courses", auth, showCourses);
-router.post("/add", auth, addCourse);
-router.delete("/remove", auth, roleAuth("Admin"), removeCourse);
-router.patch("/update", auth, updateCourse);
+router.get("/show-courses", auth, roleAuth("Admin"), showCourses);
+router.post("/add-course", auth, roleAuth("Admin"), addCourse);
+router.delete("/remove-course", auth, roleAuth("Admin"), removeCourse);
+router.patch("/update-course", auth, roleAuth("Admin"), updateCourse);
 
 module.exports = router;

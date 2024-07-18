@@ -25,4 +25,19 @@ const deleteRecord = async (req, res) => {
     }
 }
 
-module.exports = { deleteRecord };
+const deleteAll = async(req,res)=>{
+    try {
+        
+        await Attendance.deleteMany();
+
+        res.status(200).send("All the attendance have been deleted!");
+
+    } catch (error) {
+        
+        console.log(error.message);
+        res.status(500).send("Error Occured. Please try again!");
+
+    }
+}
+
+module.exports = { deleteRecord, deleteAll };

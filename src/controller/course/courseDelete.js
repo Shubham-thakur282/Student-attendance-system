@@ -12,7 +12,7 @@ const removeCourse = async (req, res) => {
         }
 
         await Course.deleteOne({ courseId: courseId });
-        return res.status(204).send("Course deleted successfully");
+        return res.status(200).send("Course deleted successfully");
 
     } catch (error) {
 

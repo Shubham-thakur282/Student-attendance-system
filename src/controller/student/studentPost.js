@@ -5,9 +5,11 @@ const jwt = require("jsonwebtoken");
 
 const addStudent = async (req, res) => {
     try {
+
         const { enrollNo, rollNo, fName, lName, year, section, dob, email, courses, fatherName, motherName, parentsContact, password, role,gender } = req.body;
 
         const studentExist = await Students.exists({ enrollNo: enrollNo });
+
         if (studentExist) {
             return res.status(409).send("Enrollment Number already exists");
         }
@@ -43,14 +45,17 @@ const addStudent = async (req, res) => {
         })
 
     } catch (error) {
+
         console.log(error.message);
         return res.status(500).send("Error occured. Please try again");
+
     }
 };
 
 
 const studentLogin = async (req, res) => {
     try {
+
         const { enrollNo, password, role } = req.body;
 
         const student = await Students.findOne({ enrollNo , role });
@@ -87,7 +92,7 @@ const studentLogin = async (req, res) => {
             });
         }
 
-        return res.status(400).send("Invalid Credentials. Please try again");
+        return res.status(404).send("Invalid Credentials. Please try again");
 
     } catch (error) {
 

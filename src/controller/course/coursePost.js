@@ -12,7 +12,10 @@ const addCourse = async (req, res) => {
                 courseName,
                 year
             });
-            return res.status(201).send(course);
+            return res.status(201).json({
+                course,
+                message:"Course added successfully",
+            });
         }
 
         return res.status(409).send("Course already exists");

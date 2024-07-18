@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const addFaculty = async (req, res) => {
     try {
+
         const { name, email, password, role, coursesTeaching, classesTeaching } = req.body;
 
         const facultyExist = await Faculty.exists({ email });
@@ -33,19 +34,18 @@ const addFaculty = async (req, res) => {
         });
 
     } catch (error) {
+
         console.log(error.message);
         return res.status(500).send("Error occured. Please try again");
+
     }
 }
 
 
 const facultyLogin = async (req, res) => {
     try {
+        
         const { email, password, role } = req.body;
-
-        // if(role !== "Faculty"){
-        //     return res.status(400).send("Invalid role");
-        // }
 
         const faculty = await Faculty.findOne({ email: email, role: role });
 

@@ -7,7 +7,7 @@ const parentsInfo = async (req, res) => {
         const parents = await Parents.findOne({ enrollNo: enrollNo });
 
         if(!parents){
-            return res.status(400).send("No parents found");
+            return res.status(404).send("No parents found");
         }
 
         res.status(200).send({

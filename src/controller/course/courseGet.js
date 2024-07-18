@@ -5,7 +5,7 @@ const showCourses = async (req, res) => {
 
         const courses = await Course.find();
 
-        if (!courses || courses.length === 0) {
+        if (!courses) {
             return res.status(404).send("Courses not found");
         }
 

@@ -2,7 +2,9 @@ const Students = require("../../models/student");
 
 const showAll = async (req, res) => {
     try {
+
         const students = await Students.find();
+
         if (students) {
             const filteredStudents = students.map(student => ({
                 enrollNo: student.enrollNo,
@@ -22,16 +24,20 @@ const showAll = async (req, res) => {
             return res.status(200).send(filteredStudents);
         }
 
-        res.status(400).send("Students not found!");
+        res.status(404).send("Students not found!");
+
     } catch (error) {
+
         console.log(error.message);
         return res.status(500).send("Error occured. Please try Again");
+
     }
 }
 
 
 const showStudents = async (req, res) => {
     try {
+        
         const { year, section, enrollNo, rollNo } = req.query;
 
         const queryObject = {};

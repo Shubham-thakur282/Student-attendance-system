@@ -70,4 +70,39 @@ const showStudents = async (req, res) => {
     }
 }
 
-module.exports = { showAll ,showStudents};
+const showStudent = async (req, res) => {
+    try {
+
+        const { enrollNo } = req.params;
+
+        const student = await Students.findOne({ enrollNo });
+
+        if (!student) {
+            return res.status(404).send("Student Not Found!");
+        }
+
+        return res.status(200).send({
+            studentDetails: {
+                enrollNo: student.enrollNo,
+                rollNo: student.rollNo,
+                fName: student.fName,
+                lName: student.lName,
+                year: student.year,
+                section: student.section,
+                dob: student.dob,
+                email: student.email,
+                courses: student.courses,
+                fatherName: student.fatherName,
+                motherName: student.motherName,
+            }
+        });
+
+    } catch (error) {
+
+        console.log(error.message);
+        return res.status(500).send("Error occured. Please try Again");
+
+    }
+}
+
+module.exports = { showAll, showStudents, showStudent };

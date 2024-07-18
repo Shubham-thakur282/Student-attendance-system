@@ -53,7 +53,7 @@ const studentLogin = async (req, res) => {
     try {
         const { enrollNo, password, role } = req.body;
 
-        const student = await Students.findOne({ enrollNo: enrollNo });
+        const student = await Students.findOne({ enrollNo , role });
 
         if (student && (await bcrypt.compare(password, student.password))) {
             const token = jwt.sign({

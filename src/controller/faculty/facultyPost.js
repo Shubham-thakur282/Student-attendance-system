@@ -47,7 +47,7 @@ const facultyLogin = async (req, res) => {
         //     return res.status(400).send("Invalid role");
         // }
 
-        const faculty = await Faculty.findOne({ email: email });
+        const faculty = await Faculty.findOne({ email: email, role: role });
 
         if (faculty && (await bcrypt.compare(password, faculty.password))) {
             const token = jwt.sign({

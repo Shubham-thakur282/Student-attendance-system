@@ -50,7 +50,7 @@ const parentLogin = async (req, res) => {
     try {
         const { enrollNo, password, role } = req.body;
 
-        const parent = await Parents.findOne({ enrollNo });
+        const parent = await Parents.findOne({ enrollNo , role });
 
         if (parent && (await bcrypt.compare(password, parent.password))) {
             const token = jwt.sign({

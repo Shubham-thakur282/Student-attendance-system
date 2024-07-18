@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 const connectDb = require("./src/database/connect"); //require connectDb function from the src -> database -> connect.js
 
 const { auth } = require("./src/middleware/auth");
@@ -16,7 +17,9 @@ const parentRoutes = require("./src/routes/parentRoutes");
 const port = process.env.PORT || 5000;
 const app = express();
 
+
 // middlewares
+app.use(bodyParser.json());
 app.use(express.json()); 
 app.use(cors());
 

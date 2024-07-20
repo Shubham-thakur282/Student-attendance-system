@@ -14,9 +14,29 @@ const showCourses = async (req, res) => {
     } catch (error) {
 
         console.error(error.message);
-        return res.status(500).send("Error occurred, please try again");
-        
+        return res.status(500).send("Error occurred, please try again!");
+
     }
 }
 
-module.exports = {showCourses};
+const showCourse = async (req, res) => {
+    try {
+
+        const { courseId } = req.params;
+        const course = await Course.findOne({ courseId });
+
+        if (!course) {
+            return res.status(404).send("Course not found");
+        }
+
+        return res.status(200).send(course);
+
+    } catch (error) {
+
+        console.log(error.message);
+        return res.status(500).send("Error occurred. Please try again!");
+
+    }
+}
+
+module.exports = { showCourses, showCourse };

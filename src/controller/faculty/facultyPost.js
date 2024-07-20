@@ -44,7 +44,7 @@ const addFaculty = async (req, res) => {
 
 const facultyLogin = async (req, res) => {
     try {
-        
+
         const { email, password, role } = req.body;
 
         const faculty = await Faculty.findOne({ email: email, role: role });
@@ -65,6 +65,8 @@ const facultyLogin = async (req, res) => {
                     Name: faculty.name,
                     token,
                     email: faculty.email,
+                    coursesTeaching: faculty.coursesTeaching,
+                    classesTeaching: faculty.classesTeaching,
                     role,
                 }
             });

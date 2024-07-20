@@ -8,7 +8,7 @@ const { auth, roleAuth } = require("../middleware/auth");
 
 
 router.get("/show-courses", auth, roleAuth("Admin"), showCourses);
-router.get("/show-course", auth, roleAuth("Faculty"), showCourse);
+router.get("/show-course/:courseId", auth, roleAuth("Faculty"), showCourse);
 router.post("/add-course", auth, roleAuth("Admin"), addCourse);
 router.delete("/remove-course", auth, roleAuth("Admin"), removeCourse);
 router.patch("/update-course", auth, roleAuth("Admin"), updateCourse);

@@ -9,7 +9,7 @@ const { deleteRecord, deleteAll } = require("../controller/attendance/attendance
 const { auth, roleAuth } = require("../middleware/auth");
 
 
-router.post("/record-new", auth, newAttendance);
+router.post("/record-new", auth, roleAuth("Faculty"), newAttendance);
 
 router.get("/show-attendance-student/:enrollNo", auth, roleAuth("Student"), getAttendanceByStudent); //this and next function are same just the role is changed in case if parent or student
 router.get("/show-attendance-parent/:enrollNo", auth, roleAuth("Parent"), getAttendanceByStudent);

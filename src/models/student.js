@@ -17,10 +17,10 @@ const studentSchema = new mongoose.Schema({
     lName: {
         type: String,
     },
-    gender:{
-        type:String,
-        enum:["M","F","O"],
-        required:true,
+    gender: {
+        type: String,
+        enum: ["M", "F", "O"],
+        required: true,
     },
     year: {
         type: Number,
@@ -31,36 +31,36 @@ const studentSchema = new mongoose.Schema({
         enum: ['A', 'B'],
         required: true,
     },
-    dob:{
-        type:Date,
-        required:true,
+    dob: {
+        type: String,
+        required: true,
     },
-    email:{
-        type:String,
-        required:true,
-        unique:true,
+    email: {
+        type: String,
+        required: true,
+        unique: true,
     },
     courses: [{
-        type:Number
+        type: Number
     }],
-    fatherName:{
-        type:String,
+    fatherName: {
+        type: String,
     },
-    motherName:{
-        type:String,
+    motherName: {
+        type: String,
     },
-    parentsContact:{
-        type:Number,
+    parentsContact: {
+        type: Number,
     },
-    password:{
-        type:String,
-        required:true,
+    password: {
+        type: String,
+        required: true,
     },
-    role:{
-        type:String,
-        default:"Student",
-        required:true,
+    role: {
+        type: String,
+        default: "Student",
+        required: true,
     }
 })
 
-module.exports = mongoose.model("Students",studentSchema);
+module.exports = mongoose.model("Students", studentSchema);

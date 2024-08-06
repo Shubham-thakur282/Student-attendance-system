@@ -1,4 +1,6 @@
+const { query } = require("express");
 const Students = require("../../models/student");
+const student = require("../../models/student");
 
 const showAll = async (req, res) => {
     try {
@@ -37,7 +39,7 @@ const showAll = async (req, res) => {
 
 const showStudents = async (req, res) => {
     try {
-        
+
         const { year, section, enrollNo, rollNo } = req.query;
 
         const queryObject = {};
@@ -111,4 +113,32 @@ const showStudent = async (req, res) => {
     }
 }
 
-module.exports = { showAll, showStudents, showStudent };
+const getStudents = async (req, res) => {
+    try {
+
+        const { year, section, courseId } = req.params;
+
+        const qurey = {
+            year: parseInt(year),
+            section,
+            courses: { $in: parseInt(courseId) }
+        };
+
+        const students = await Students.find({ year: parseInt(year), section, courses: { $in: parseInt(courseId) } }, "-password");
+
+        if (!students || students.length === 0) {
+            return res.status(404).send("Students not found!");
+        }
+        console.log(students.length);
+        return res.status(200).json(students);
+
+
+    } catch (error) {
+
+        console.log(error);
+        return res.status(500).send("Error occured. Please try Again");
+
+    }
+}
+
+module.exports = { showAll, showStudents, showStudent, getStudents };

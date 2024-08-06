@@ -19,6 +19,7 @@ const facultySchema = new mongoose.Schema({
     contactNumber:{
         type:Number,
         required:true,
+        unique:false,
     },
     role: {
         type: String,

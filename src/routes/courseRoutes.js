@@ -9,6 +9,7 @@ const { auth, roleAuth } = require("../middleware/auth");
 
 router.get("/show-courses", auth, roleAuth("Admin"), showCourses);
 router.get("/show-course/:courseId", auth, roleAuth("Faculty"), showCourse);
+router.get("/show-courses-faculty", auth, roleAuth("Faculty"), showCourseToStudents);
 router.get("/show-courses-students/", auth, roleAuth("Student"), showCourseToStudents);
 router.get("/show-courses-parents/", auth, roleAuth("Parent"), showCourseToStudents);
 router.post("/add-course", auth, roleAuth("Admin"), addCourse);

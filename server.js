@@ -35,6 +35,10 @@ app.get("/", (req, res) => {
     res.send("Welcome to my API");
 });
 
+// app.post("/api/sms-delivery-status",(req,res)=>){
+
+// }
+
 
 const start = async () => {
     try {

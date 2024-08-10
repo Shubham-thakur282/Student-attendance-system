@@ -39,4 +39,29 @@ const showCourse = async (req, res) => {
     }
 }
 
-module.exports = { showCourses, showCourse };
+const showCourseToStudents = async (req,res) => {
+    try {
+        
+        const {courses} = req.body;
+        
+        if(!courses || courses.length === 0){
+            return res.status(400).send("No courses provided.");
+        }
+
+        const courseDetails = await Course.find({courseId:{$in:courses}});
+
+        if(courseDetails.length !== courses.length){
+            return res.status(404).send("some courses not found.");
+        }
+
+        return res.status(200).json(courseDetails);
+
+    } catch (error) {
+        
+        console.log(error.message);
+        return res.status(500).send("Error occurred. Please try again!");
+
+    }
+}
+
+module.exports = { showCourses, showCourse, showCourseToStudents };

@@ -5,28 +5,12 @@ const student = require("../../models/student");
 const showAll = async (req, res) => {
     try {
 
-        const students = await Students.find();
+        const students = await Students.find({},"-password").sort({enrollNo:1});
 
-        if (students) {
-            const filteredStudents = students.map(student => ({
-                enrollNo: student.enrollNo,
-                rollNo: student.rollNo,
-                fName: student.fName,
-                lName: student.lName,
-                year: student.year,
-                section: student.section,
-                dob: student.dob,
-                email: student.email,
-                courses: student.courses,
-                fatherName: student.fatherName,
-                motherName: student.motherName,
-                parentsContact: student.parentsContact
-            }));
-
-            return res.status(200).send(filteredStudents);
+        if (!students || students.length === 0) {
+            return res.status(404).send("Students not found!");
         }
-
-        res.status(404).send("Students not found!");
+        return res.status(200).send(students);
 
     } catch (error) {
 
@@ -60,7 +44,7 @@ const showStudents = async (req, res) => {
             queryObject.rollNo = rollNo;
         }
 
-        const response = await Students.find(queryObject, "-password");
+        const response = await Students.find(queryObject, "-password").sort({enrollNo:1});
 
         if (!response) {
             return res.status(404).send("Students Not Found");
@@ -124,7 +108,7 @@ const getStudents = async (req, res) => {
             courses: { $in: parseInt(courseId) }
         };
 
-        const students = await Students.find({ year: parseInt(year), section, courses: { $in: parseInt(courseId) } }, "-password");
+        const students = await Students.find({ year: parseInt(year), section, courses: { $in: parseInt(courseId) } }, "-password").sort({rollNo:1});
 
         if (!students || students.length === 0) {
             return res.status(404).send("Students not found!");

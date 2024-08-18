@@ -25,8 +25,9 @@ const attendanceSchema = new mongoose.Schema({
         enum: ["A", "B"],
     },
     date: {
-        type: String,
+        type: Date,
         required: true,
+        default:Date.now
     },
     time: {
         type: String,

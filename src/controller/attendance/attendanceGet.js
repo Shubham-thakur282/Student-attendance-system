@@ -2,6 +2,30 @@ const Attendance = require("../../models/attendance");
 const Students = require("../../models/student");
 const Course = require("../../models/course");
 
+const getAttendanceByDate = async (req, res) => {
+    try {
+        const { courseId, startDate, endDate, section } = req.body;
+        
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        
+        const attendanceRecords = await Attendance.find({ courseId, section , date: { $gte: start, $lte: end } }).sort({ enrollNo: 1, date: 1 });
+
+        if (attendanceRecords.length === 0) {
+            return res.status(404).send("Records not found!");
+        }
+
+        console.log(`Sending attendance records from ${startDate} to ${endDate}`);
+        return res.status(200).send(attendanceRecords);
+
+    } catch (error) {
+
+        console.log(error);
+        res.status(500).send("Error Occured. Please try again!");
+
+    }
+}
+
 const getAttendanceByStudent = async (req, res) => {
     try {
 
@@ -83,4 +107,4 @@ const getAttendanceByFaculty = async (req, res) => {
 
 }
 
-module.exports = { getAttendanceByStudent, getAttendanceByFaculty };
+module.exports = { getAttendanceByStudent, getAttendanceByFaculty, getAttendanceByDate };

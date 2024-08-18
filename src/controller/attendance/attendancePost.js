@@ -1,6 +1,7 @@
 const Attendance = require("../../models/attendance");
 const Students = require("../../models/student");
 const Course = require("../../models/course");
+// const sendMessage = require("../../utils/sendMessage");
 
 const newAttendace = async (req, res) => {
     try {
@@ -40,6 +41,11 @@ const newAttendace = async (req, res) => {
                 if (!["A", "P", "L"].includes(status)) {
                     return res.status(400).send("Invalid Status");
                 }
+                
+                // if(status === "A"){
+                //     const phoneNumber ="91"+ this.toString(studentExist.parentsContact);
+                //     sendMessage(phoneNumber,`You ward is Ab`)
+                // }
 
                 validAttendanceRecords.push({ enrollNo, courseId, status, date, time, year, section });
             }

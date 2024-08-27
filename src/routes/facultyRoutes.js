@@ -11,7 +11,7 @@ const {showFaculties} = require("../controller/faculty/facultyGet");
 router.post("/faculty-login", facultyLogin);
 
 //other faculty routes
-router.get("/show-faculty/:role", auth, showFaculties);
+router.get("/show-faculty", auth, showFaculties);
 router.post("/add-faculty", auth, roleAuth("Admin"), addFaculty);
 router.delete("/remove-faculty", auth, roleAuth("Admin"), removeFaculty);
 

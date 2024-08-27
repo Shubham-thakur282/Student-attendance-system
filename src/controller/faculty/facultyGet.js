@@ -3,7 +3,7 @@ const Faculty = require("../../models/faculty");
 const showFaculties = async (req, res) => {
     try {
         
-        const {role} = req.params;
+        const {role} = req.query;
 
         const query = {};
         

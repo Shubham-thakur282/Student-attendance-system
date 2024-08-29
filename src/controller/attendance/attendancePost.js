@@ -42,11 +42,11 @@ const newAttendace = async (req, res) => {
                     return res.status(400).send("Invalid Status");
                 }
 
-                if(status === "A"){
-                    const phoneNumber ="91"+ this.toString(studentExist.parentsContact);
-                    const name = `${studentExist.fName} ${studentExist.lName?studentExist.lName:""}`;
-                    sendMessage(phoneNumber,`Your ward, ${name}, is Absent today`);
-                }
+                // if(status === "A"){
+                //     const phoneNumber ="91"+ this.toString(studentExist.parentsContact);
+                //     const name = `${studentExist.fName} ${studentExist.lName?studentExist.lName:""}`;
+                //     sendMessage(phoneNumber,`Your ward, ${name}, is Absent today`);
+                // }
 
                 validAttendanceRecords.push({ enrollNo, courseId, status, date, time, year, section });
             }

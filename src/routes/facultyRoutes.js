@@ -5,9 +5,9 @@ const { auth, roleAuth } = require("../middleware/auth");
 
 const { addFaculty, facultyLogin } = require("../controller/faculty/facultyPost");
 const { removeFaculty } = require("../controller/faculty/facultyDelete");
-const {showFaculties} = require("../controller/faculty/facultyGet");
+const { showFaculties } = require("../controller/faculty/facultyGet");
 
-//login route
+//login route 
 router.post("/faculty-login", facultyLogin);
 
 //other faculty routes

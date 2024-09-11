@@ -1,6 +1,4 @@
-const { query } = require("express");
 const Students = require("../../models/student");
-const student = require("../../models/student");
 
 const showAll = async (req, res) => {
     try {

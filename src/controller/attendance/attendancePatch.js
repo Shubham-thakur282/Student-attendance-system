@@ -21,13 +21,13 @@ const updateAttendance = async (req, res) => {
         }
         if (attendaceTaken) {
             for (const record of attendanceRecords) {
-                const {enrollNo, status} = record;
+                const { enrollNo, status } = record;
                 filter.enrollNo = enrollNo;
                 const update = {
                     $set: { status }
                 }
 
-                await Attendance.findOneAndUpdate(filter,update);
+                await Attendance.findOneAndUpdate(filter, update);
 
             }
             return res.status(200).send("Records updated Successfully");
@@ -43,5 +43,5 @@ const updateAttendance = async (req, res) => {
     }
 }
 
-module.exports = {updateAttendance};
+module.exports = { updateAttendance };
 

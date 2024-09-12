@@ -5,11 +5,11 @@ const Course = require("../../models/course");
 const getAttendanceByDate = async (req, res) => {
     try {
         const { courseId, startDate, endDate, section } = req.body;
-        
+
         const start = new Date(startDate);
         const end = new Date(endDate);
-        
-        const attendanceRecords = await Attendance.find({ courseId, section , date: { $gte: start, $lte: end } }).sort({ enrollNo: 1, date: 1 });
+
+        const attendanceRecords = await Attendance.find({ courseId, section, date: { $gte: start, $lte: end } }).sort({ enrollNo: 1, date: 1 });
 
         if (attendanceRecords.length === 0) {
             return res.status(404).send("Records not found!");

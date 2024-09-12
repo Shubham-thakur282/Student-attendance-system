@@ -1,4 +1,5 @@
 const Students = require("../../models/student");
+const bcrypt = require("bcrypt");
 
 const changePassword = async (req, res) => {
     try {
@@ -9,8 +10,8 @@ const changePassword = async (req, res) => {
         if (!student) {
             return res.status(404).send("Student Not Found!");
         }
-
-        await Students.findOneAndUpdate({ enrollNo }, { password: newPassword });
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await Students.findOneAndUpdate({ enrollNo }, { password: hashedPassword });
 
         return res.status(200).send("Password changed successfully!");
 

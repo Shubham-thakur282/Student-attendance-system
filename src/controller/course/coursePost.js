@@ -2,8 +2,8 @@ const Course = require("../../models/course");
 
 const addCourse = async (req, res) => {
     try {
-        
-        const { courseId, courseName ,year} = req.body;
+
+        const { courseId, courseName, year } = req.body;
         const courseExist = await Course.exists({ courseId: courseId });
 
         if (!courseExist) {
@@ -14,7 +14,7 @@ const addCourse = async (req, res) => {
             });
             return res.status(201).json({
                 course,
-                message:"Course added successfully",
+                message: "Course added successfully",
             });
         }
 
@@ -24,7 +24,7 @@ const addCourse = async (req, res) => {
 
         console.error(error.message);
         return res.status(500).send("Error occurred, please try again");
-    
+
     }
 };
 

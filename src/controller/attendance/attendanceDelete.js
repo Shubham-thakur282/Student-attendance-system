@@ -25,21 +25,15 @@ const deleteRecord = async (req, res) => {
     }
 }
 
-const deleteAll = async(req,res)=>{
+const deleteAll = async (req, res) => {
     try {
-        
-        const attendance = await Attendance.find();
 
-        if(!attendance){
-            return res.status(404).send("No record found!");
-        }
-        
-        await Attendance.deleteMany();
+        const res = await Attendance.deleteMany();
 
         res.status(204).send("All the attendance have been deleted!");
 
     } catch (error) {
-        
+
         console.log(error.message);
         res.status(500).send("Error Occured. Please try again!");
 

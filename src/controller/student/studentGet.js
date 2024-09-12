@@ -3,7 +3,7 @@ const Students = require("../../models/student");
 const showAll = async (req, res) => {
     try {
 
-        const students = await Students.find({},"-password").sort({enrollNo:1});
+        const students = await Students.find({}, "-password").sort({ enrollNo: 1 });
 
         if (!students || students.length === 0) {
             return res.status(404).send("Students not found!");
@@ -42,7 +42,7 @@ const showStudents = async (req, res) => {
             queryObject.rollNo = rollNo;
         }
 
-        const response = await Students.find(queryObject, "-password").sort({enrollNo:1});
+        const response = await Students.find(queryObject, "-password").sort({ enrollNo: 1 });
 
         if (!response) {
             return res.status(404).send("Students Not Found");
@@ -65,26 +65,14 @@ const showStudent = async (req, res) => {
 
         const { enrollNo } = req.params;
 
-        const student = await Students.findOne({ enrollNo });
+        const student = await Students.findOne({ enrollNo }, "-password");
 
         if (!student) {
             return res.status(404).send("Student Not Found!");
         }
 
         return res.status(200).send({
-            studentDetails: {
-                enrollNo: student.enrollNo,
-                rollNo: student.rollNo,
-                fName: student.fName,
-                lName: student.lName,
-                year: student.year,
-                section: student.section,
-                dob: student.dob,
-                email: student.email,
-                courses: student.courses,
-                fatherName: student.fatherName,
-                motherName: student.motherName,
-            }
+            studentDetails: student
         });
 
     } catch (error) {
@@ -106,7 +94,7 @@ const getStudents = async (req, res) => {
             courses: { $in: parseInt(courseId) }
         };
 
-        const students = await Students.find({ year: parseInt(year), section, courses: { $in: parseInt(courseId) } }, "-password").sort({rollNo:1});
+        const students = await Students.find({ year: parseInt(year), section, courses: { $in: parseInt(courseId) } }, "-password").sort({ rollNo: 1 });
 
         if (!students || students.length === 0) {
             return res.status(404).send("Students not found!");

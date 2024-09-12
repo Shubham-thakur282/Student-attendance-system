@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const addStudent = async (req, res) => {
     try {
 
-        const { enrollNo, rollNo, fName, lName, year, section, dob, email, courses, fatherName, motherName, parentsContact, password, role,gender } = req.body;
+        const { enrollNo, rollNo, fName, lName, year, section, dob, email, courses, fatherName, motherName, parentsContact, password, role, gender } = req.body;
 
         const studentExist = await Students.exists({ enrollNo: enrollNo });
 
@@ -34,14 +34,15 @@ const addStudent = async (req, res) => {
             role
         })
 
-        res.status(201).json({
+        return res.status(201).json({
             studentDetails: {
                 enrollNo: student.enrollNo,
                 rollNo: student.rollNo,
                 fName: student.fName,
                 year: student.year,
                 section: student.section,
-            }
+            },
+            message: "Student Added!"
         })
 
     } catch (error) {
@@ -58,7 +59,7 @@ const studentLogin = async (req, res) => {
 
         const { enrollNo, password, role } = req.body;
 
-        const student = await Students.findOne({ enrollNo , role });
+        const student = await Students.findOne({ enrollNo, role });
 
         if (student && (await bcrypt.compare(password, student.password))) {
             const token = jwt.sign({
@@ -98,7 +99,7 @@ const studentLogin = async (req, res) => {
 
         console.log(error.message);
         return res.status(500).send("Something went wrong. Please try again");
-    
+
     }
 }
 

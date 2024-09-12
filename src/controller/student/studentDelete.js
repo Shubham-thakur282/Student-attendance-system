@@ -20,19 +20,19 @@ const removeStudent = async (req, res) => {
     }
 }
 
-const removeStudents = async(req,res)=>{
+const removeStudents = async (req, res) => {
     try {
-        const {year} = req.query;
+        const { year } = req.query;
 
-        const res = await Students.deleteMany({year});
+        const res = await Students.deleteMany({ year });
 
-        if(res.deletedCount === 0){
+        if (res.deletedCount === 0) {
             return res.status(404).send("No students found for the given year!");
         }
         return res.status(200).send(`All students for the year ${year} are removed!`);
 
     } catch (error) {
-        
+
         console.log(error.message);
         console.log(error);
         return res.status(500).send("Error occured!");

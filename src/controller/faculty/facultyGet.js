@@ -2,11 +2,11 @@ const Faculty = require("../../models/faculty");
 
 const showFaculties = async (req, res) => {
     try {
-        
-        const {role} = req.query;
+
+        const { role } = req.query;
 
         const query = {};
-        
+
         if (role) {
             query.role = role;
         }
@@ -26,4 +26,4 @@ const showFaculties = async (req, res) => {
     }
 }
 
-module.exports = {showFaculties};
+module.exports = { showFaculties };

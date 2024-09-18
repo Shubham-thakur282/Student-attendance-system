@@ -6,7 +6,7 @@ const { auth, roleAuth } = require("../middleware/auth");
 const { addStudent, studentLogin } = require("../controller/student/studentPost");
 const { showAll, showStudents, showStudent, getStudents } = require("../controller/student/studentGet");
 const { removeStudent, removeStudents } = require("../controller/student/studentDelete");
-const { changePassword } = require("../controller/student/studentPatch");
+const { changePassword, updateYear } = require("../controller/student/studentPatch");
 //students login route
 router.post("/student-login", studentLogin);
 
@@ -21,10 +21,11 @@ router.get("/show-students", auth, roleAuth("Faculty"), showStudents);
 router.get("/show-student/:enrollNo", auth, roleAuth("Parent"), showStudent);
 router.get("/get-students/:year/:section/:courseId", auth, roleAuth("Faculty"), getStudents);
 
-router.delete("/remove-student",auth,roleAuth("Admin"),removeStudent);
-router.delete("/remove-students",auth,roleAuth("Admin"),removeStudents);
+router.delete("/remove-student", auth, roleAuth("Admin"), removeStudent);
+router.delete("/remove-students", auth, roleAuth("Admin"), removeStudents);
 
-router.patch("/change-password",auth,roleAuth("Admin"),changePassword);
+router.patch("/change-password", auth, roleAuth("Admin"), changePassword);
+router.patch("/update-year", auth, roleAuth("Admin"), updateYear);
 
 router.get("/test", (req, res) => {
     res.send("Hello Student");

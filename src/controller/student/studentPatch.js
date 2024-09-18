@@ -24,4 +24,19 @@ const changePassword = async (req, res) => {
     }
 }
 
-module.exports = { changePassword };
+const updateYear = async (req, res) => {
+    try {
+        await Students.updateMany({ year: 1 }, { year: 2 });
+
+        return res.status(200).send("Year changed!");
+
+    } catch (error) {
+
+        console.log(error.message);
+        console.log(error);
+        return res.status(500).send("Error Occured!");
+
+    }
+}
+
+module.exports = { changePassword, updateYear };

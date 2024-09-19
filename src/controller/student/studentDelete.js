@@ -4,11 +4,19 @@ const removeStudent = async (req, res) => {
     try {
         const { enrollNo } = req.query;
 
-        const res = await Students.deleteOne({ enrollNo });
+        if (!enrollNo) {
+            return res.status(400).send("Enrollment number is required.");
+        }
 
-        if (res.deletedCount === 0) {
+        const student = await Students.findOne({ enrollNo });
+
+        if (!student) {
+            console.log(enrollNo);
             return res.status(404).send("Student not found!");
         }
+
+        await Students.deleteOne({ enrollNo });
+
         return res.status(200).send(`Student with enrollment number ${enrollNo} is removed!`);
 
     } catch (error) {

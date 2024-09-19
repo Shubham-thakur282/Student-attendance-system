@@ -7,7 +7,7 @@ const { updateCourse } = require("../controller/course/CoursePatch");
 const { auth, roleAuth } = require("../middleware/auth");
 
 
-router.get("/show-courses", auth, roleAuth("Admin"), showCourses);
+router.get("/show-courses", auth, showCourses);
 router.get("/show-course/:courseId", auth, showCourse);
 router.get("/show-courses-multiple", auth, showCourseToStudents);
 router.post("/add-course", auth, roleAuth("Admin"), addCourse);

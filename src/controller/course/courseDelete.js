@@ -5,9 +5,9 @@ const removeCourse = async (req, res) => {
     try {
 
         const { courseId } = req.body;
-        const res = await Course.deleteOne({ courseId: courseId });
+        const result = await Course.deleteOne({ courseId: courseId });
 
-        if (res.deletedCount === 0) {
+        if (result.deletedCount === 0) {
             return res.status(404).send("Course Not Found");
         }
 

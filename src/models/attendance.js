@@ -5,6 +5,10 @@ const attendanceSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    rollNo: {
+        type: Number,
+        required: true,
+    },
     courseId: {
         type: Number,
         required: true,
@@ -26,7 +30,7 @@ const attendanceSchema = new mongoose.Schema({
     date: {
         type: Date,
         required: true,
-        default:Date.now
+        default: Date.now
     },
     time: {
         type: String,

@@ -25,7 +25,7 @@ const newAttendace = async (req, res) => {
         if (!attendaceTaken) {
             for (const record of attendanceRecords) {
 
-                const { enrollNo, status } = record;
+                const { enrollNo, rollNo, status } = record;
 
                 const studentExist = await Students.findOne({ enrollNo });
 
@@ -48,7 +48,7 @@ const newAttendace = async (req, res) => {
                 //     sendMessage(phoneNumber,`Your ward, ${name}, is Absent today`);
                 // }
 
-                validAttendanceRecords.push({ enrollNo, courseId, status, date, time, year, section });
+                validAttendanceRecords.push({ enrollNo, rollNo, courseId, status, date, time, year, section });
             }
 
             const createdRecords = await Attendance.insertMany(validAttendanceRecords);

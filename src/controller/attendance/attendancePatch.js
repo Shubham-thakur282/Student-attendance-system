@@ -7,13 +7,17 @@ const updateAttendance = async (req, res) => {
 
         const { attendanceRecords, courseId, date, time, year, section } = req.body;
 
+        const startOfDay = new Date(date);
+        const endOfDay = new Date(date);
+        endOfDay.setHours(23, 59, 59, 999);
+
         if (!Array.isArray(attendanceRecords) || attendanceRecords.length === 0) {
             return res.status(400).send("Invalid input, expected an array of attendance record");
         }
 
-        const attendaceTaken = await Attendance.exists({ date, time, year, section, courseId });
+        const attendaceTaken = await Attendance.exists({ date: { $gte: startOfDay, $lt: endOfDay }, time, year, section, courseId });
         const filter = {
-            date,
+            date: { $gte: startOfDay, $lt: endOfDay },
             time,
             year,
             section,

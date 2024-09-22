@@ -5,11 +5,15 @@ const deleteRecord = async (req, res) => {
 
         const { courseId, date, time, year, section } = req.body;
 
-        const attendaceTaken = await Attendance.exists({ date, time, year, section, courseId });
+        const startOfDay = new Date(date);
+        const endOfDay = new Date(date);
+        endOfDay.setHours(23, 59, 59, 999);
+
+        const attendaceTaken = await Attendance.exists({ date: { $gte: startOfDay, $lt: endOfDay }, time, year, section, courseId });
 
         if (attendaceTaken) {
 
-            await Attendance.deleteMany({ date, time, year, section, courseId });
+            await Attendance.deleteMany({ date: { $gte: startOfDay, $lt: endOfDay }, time, year, section, courseId });
 
             return res.status(200).send("Records Deleted successfully");
 

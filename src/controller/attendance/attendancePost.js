@@ -43,9 +43,9 @@ const newAttendace = async (req, res) => {
                 }
 
                 if(status === "A"){
-                    const phoneNumber ="91"+ this.toString(9015035373);
+                    const phoneNumber ="919015035373";
                     const name = `${studentExist.fName} ${studentExist.lName?studentExist.lName:""}`;
-                    sendMessage(phoneNumber,`Your ward, ${name}, is Absent today`);
+                    sendMessage(phoneNumber,`Your ward, ${name}, is Absent today. (DIET Solan)`);
                 }
 
                 validAttendanceRecords.push({ enrollNo, rollNo, courseId, status, date, time, year, section });

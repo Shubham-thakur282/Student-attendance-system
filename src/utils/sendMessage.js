@@ -3,15 +3,15 @@ const axios = require("axios");
 
 const sendMessage = async (to, message) => {
   try {
-    const name = "Shubham Thakur"
     const data = {
-      Text: `Your ward, ${name}, is Absent today. (DIET Solan)`,
+      Text: message,
       Number: to,
       SenderId: `${process.env.SENDER_ID}`,
       DRNotifyUrl: "https://www.domainname.com/notifyurl",
       DRNotifyHttpMethod: "POST",
       Tool: "API"
     };
+    console.log(to);
     const username = process.env.API_KEY_SMS;
     const password = process.env.SMS_BEARER;
     const api_key = process.env.API_KEY_SMS;
@@ -24,7 +24,7 @@ const sendMessage = async (to, message) => {
         password: password
       }
     })
-
+    // console.log(response);
     if(response.status === 202){
       console.log("Message sent");
     }else{
@@ -33,6 +33,7 @@ const sendMessage = async (to, message) => {
 
   } catch (error) {
     console.error('Error sending message:', error.response ? error.response.data : error.message);
+    // console.log(error);
   }
 };
 

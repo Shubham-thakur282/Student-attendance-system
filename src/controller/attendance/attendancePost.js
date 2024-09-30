@@ -1,7 +1,7 @@
 const Attendance = require("../../models/attendance");
 const Students = require("../../models/student");
 const Course = require("../../models/course");
-// const sendMessage = require("../../utils/sendMessage");
+const sendMessage = require("../../utils/sendMessage");
 
 const newAttendace = async (req, res) => {
     try {

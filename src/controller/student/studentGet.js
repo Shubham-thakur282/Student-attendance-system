@@ -41,9 +41,33 @@ const showStudents = async (req, res) => {
         if (rollNo) {
             queryObject.rollNo = rollNo;
         }
+        // let limits=10;
 
-        const response = await Students.find(queryObject, "-password").sort({ enrollNo: 1 });
+        // if(limit)
+        //     limits = limit;
+        
+        // let skips = 0;
 
+        // if(skip)
+        //     skips = skip;
+
+        // if(gender)
+        // {
+        //     queryObject.gender = gender;
+        // }
+        
+
+        let response = await Students.find(queryObject, "-password").sort({ enrollNo: 1 });
+        
+        // let newResponse = [];
+
+        // response.forEach((student) =>{
+        //     const[day,month,year] = student.dob.split("/");
+        //     if(year == dobyear){
+        //         newResponse.push(student);
+        //     }
+        // })
+        
         if (!response) {
             return res.status(404).send("Students Not Found");
         }

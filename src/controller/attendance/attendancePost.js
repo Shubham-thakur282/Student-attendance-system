@@ -43,7 +43,9 @@ const newAttendace = async (req, res) => {
                 }
 
                 if(status === "A"){
-                    const phoneNumber ="919882220140";
+                    // let phoneNumber ="919882220140";
+                    let phoneNumber = `91${studentExist.parentsContact}`;
+                    // console.log(phoneNumber);
                     const name = `${studentExist.fName} ${studentExist.lName?studentExist.lName:""}`;
                     sendMessage(phoneNumber,`Your ward, ${name}, is Absent today. (DIET Solan)`);
                 }
